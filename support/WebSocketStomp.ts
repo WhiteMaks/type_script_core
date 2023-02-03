@@ -12,9 +12,7 @@ import {
 } from "stompjs";
 import Common from "./Common";
 
-class WebSocket {
-    private static webSocket: WebSocket;
-
+class WebSocketStomp {
     /**
      * Объект для работы с веб сокет клиентом
      * @private
@@ -42,7 +40,7 @@ class WebSocket {
      */
     private isOnline: boolean;
 
-    private constructor(host: string, port: number, ssl: boolean) {
+    public constructor(host: string, port: number, ssl: boolean) {
         this.isOnline = false;
 
         this.subscribesBuffer = new Map<string, (message: Message) => void>();
@@ -61,18 +59,6 @@ class WebSocket {
         );
 
         this.init();
-    }
-
-    public static getInstance(): WebSocket {
-        if (WebSocket.webSocket == null) {
-            WebSocket.webSocket = new WebSocket(
-                "localhost",
-                9999,
-                false
-            );
-        }
-
-        return WebSocket.webSocket;
     }
 
     private init(): void {
@@ -182,4 +168,4 @@ class WebSocket {
     }
 }
 
-export default WebSocket;
+export default WebSocketStomp;
