@@ -10,10 +10,10 @@ import GraphQLResponse      from "./GraphQLResponse";
 class GraphQL extends RestApi {
     private readonly url: string;
 
-    public constructor() {
+    public constructor(url: string) {
         super();
 
-        this.url = "/graphql";
+        this.url = url;
     }
 
     public async query<T extends GraphQLResponse<any>>(request: GraphQLRequest): Promise<T> {
