@@ -6,54 +6,54 @@
 import Character from "../data/Character";
 
 class StringSupport {
-    private readonly value: string;
+	private readonly value: string;
 
-    public constructor(value: string) {
-        this.value = value;
-    }
+	public constructor(value: string) {
+		this.value = value;
+	}
 
-    public toSnakeCase(): string {
-        let result = `${this.value}`;
+	/**
+	 * Форматирование строки*
+	 * @param baseStr строка для форматирования
+	 * @param args аргументы для вставки
+	 *
+	 * @example StringSupport.format("Hello my name is %s. And I like %s", "Maksim", "swim") -> "Hello my name is Maksim. And I like swim";
+	 */
+	public static format(baseStr: string, ...args: string[]): string {
+		let result = baseStr;
 
-        if (result.includes(" ")) {
-            result = result.replaceAll(" ", "_");
-        }
+		for (const arg of args) {
+			result = result.replace(
+				"%s",
+				arg
+			);
+		}
 
-        return result.toLowerCase();
-    }
+		return result;
+	}
 
-    /**
-     * Получение массива символов из строки
-     */
-    public toCharArray(): Character[] {
-        const result: Character[] = [];
+	public toSnakeCase(): string {
+		let result = `${this.value}`;
 
-        for (let i = 0; i < this.value.length; i++) {
-            result.push(new Character(this.value[i]));
-        }
+		if (result.includes(" ")) {
+			result = result.replaceAll(" ", "_");
+		}
 
-        return result;
-    }
+		return result.toLowerCase();
+	}
 
-    /**
-     * Форматирование строки*
-     * @param baseStr строка для форматирования
-     * @param args аргументы для вставки
-     *
-     * @example StringSupport.format("Hello my name is %s. And I like %s", "Maksim", "swim") -> "Hello my name is Maksim. And I like swim";
-     */
-    public static format(baseStr: string, ...args: string[]): string {
-        let result = baseStr;
+	/**
+	 * Получение массива символов из строки
+	 */
+	public toCharArray(): Character[] {
+		const result: Character[] = [];
 
-        for (const arg of args) {
-            result = result.replace(
-                "%s",
-                arg
-            );
-        }
+		for (let i = 0; i < this.value.length; i++) {
+			result.push(new Character(this.value[i]));
+		}
 
-        return result;
-    }
+		return result;
+	}
 }
 
 export default StringSupport;

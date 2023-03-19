@@ -3,31 +3,31 @@
  *
  * @author WhiteMaks
  */
-import RestApi              from "./RestApi";
-import GraphQLRequest       from "./GraphQLRequest";
-import GraphQLResponse      from "./GraphQLResponse";
+import RestApi from "./RestApi";
+import GraphQLRequest from "./GraphQLRequest";
+import GraphQLResponse from "./GraphQLResponse";
 
 class GraphQL extends RestApi {
-    private readonly url: string;
+	private readonly url: string;
 
-    public constructor(url: string) {
-        super();
+	public constructor(url: string) {
+		super();
 
-        this.url = url;
-    }
+		this.url = url;
+	}
 
-    public async query<T extends GraphQLResponse<any>>(request: GraphQLRequest): Promise<T> {
-        const body: GraphQLRequest = {
-            query: request.query
-        };
+	public async query<T extends GraphQLResponse<any>>(request: GraphQLRequest): Promise<T> {
+		const body: GraphQLRequest = {
+			query: request.query
+		};
 
-        return super.responseToJson(
-            await super.sendRequestPostJson(
-                this.url,
-                body
-            )
-        )
-    }
+		return super.responseToJson(
+			await super.sendRequestPostJson(
+				this.url,
+				body
+			)
+		)
+	}
 }
 
 export default GraphQL;

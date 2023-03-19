@@ -5,7 +5,7 @@
  */
 
 interface CommonResponse {
-    error:      string;
+	error: string;
 }
 
 export default CommonResponse;

@@ -5,8 +5,8 @@
  */
 
 interface GraphQLResponse<DATA> {
-    data: DATA;
-    errors: any;
+	data: DATA;
+	errors: any;
 }
 
 export default GraphQLResponse;

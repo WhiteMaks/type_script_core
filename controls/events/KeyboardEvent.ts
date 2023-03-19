@@ -9,43 +9,43 @@ import KeyboardEventType from "../enums/KeyboardEventType";
  * Класс для описания событий клавиатуры
  */
 class KeyboardEvent {
-    /**
-     * Тип события
-     * @private
-     */
-    private readonly type: KeyboardEventType;
+	/**
+	 * Тип события
+	 * @private
+	 */
+	private readonly type: KeyboardEventType;
 
-    /**
-     * Код кнопки
-     * @private
-     */
-    private readonly code: string;
+	/**
+	 * Код кнопки
+	 * @private
+	 */
+	private readonly code: string;
 
-    /**
-     * Конструктор для создания события клавиатуры
-     * @param type тип события
-     * @param code код кнопки
-     */
-    public constructor(type: KeyboardEventType, code: string) {
-        this.type = type; //сохранение типа события
-        this.code = code; //сохранение кода кнопки
-    }
+	/**
+	 * Конструктор для создания события клавиатуры
+	 * @param type тип события
+	 * @param code код кнопки
+	 */
+	public constructor(type: KeyboardEventType, code: string) {
+		this.type = type; //сохранение типа события
+		this.code = code; //сохранение кода кнопки
+	}
 
-    public isPress(): boolean {
-        return this.type === KeyboardEventType.PRESS;
-    }
+	public isPress(): boolean {
+		return this.type === KeyboardEventType.PRESS;
+	}
 
-    public isRelease(): boolean {
-        return this.type === KeyboardEventType.RELEASE;
-    }
+	public isRelease(): boolean {
+		return this.type === KeyboardEventType.RELEASE;
+	}
 
-    public isValid(): boolean {
-        return this.type !== KeyboardEventType.INVALID;
-    }
+	public isValid(): boolean {
+		return this.type !== KeyboardEventType.INVALID;
+	}
 
-    public getCode(): string {
-        return this.code;
-    }
+	public getCode(): string {
+		return this.code;
+	}
 
 }
 

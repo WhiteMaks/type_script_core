@@ -6,9 +6,9 @@
 
 interface Pair<Left, Right> {
 
-    getLeft(): Left;
+	getLeft(): Left;
 
-    getRight(): Right;
+	getRight(): Right;
 }
 
 export default Pair;

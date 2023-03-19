@@ -5,20 +5,20 @@
  */
 
 enum MouseEventType {
-    L_PRESS,
-    L_RELEASE,
+	L_PRESS,
+	L_RELEASE,
 
-    R_PRESS,
-    R_RELEASE,
+	R_PRESS,
+	R_RELEASE,
 
-    WHEEL_UP,
-    WHEEL_DOWN,
+	WHEEL_UP,
+	WHEEL_DOWN,
 
-    MOVE,
-    ENTER,
-    LEAVE,
+	MOVE,
+	ENTER,
+	LEAVE,
 
-    INVALID
+	INVALID
 }
 
 export default MouseEventType;

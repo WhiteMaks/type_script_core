@@ -5,9 +5,9 @@
  */
 
 enum KeyboardEventType {
-    PRESS,
-    RELEASE,
-    INVALID
+	PRESS,
+	RELEASE,
+	INVALID
 }
 
 export default KeyboardEventType;
