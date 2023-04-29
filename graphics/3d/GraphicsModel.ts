@@ -40,7 +40,11 @@ class GraphicsModel extends GraphicsObject {
 				0,
 				0
 			),
-			1
+			new Vector3(
+				1,
+				1,
+				1
+			)
 		);
 
 		this.mesh = mesh;
@@ -94,9 +98,9 @@ class GraphicsModel extends GraphicsObject {
 		const worldMatrix = Transformation.getWorldMatrix(
 			this.position,
 			this.rotation,
-			this.scale,
-			this.scale,
-			this.scale
+			this.scale.getX(),
+			this.scale.getY(),
+			this.scale.getZ()
 		);
 
 		this.shaderProgram.attachMatrix4UniformDataFloat32(

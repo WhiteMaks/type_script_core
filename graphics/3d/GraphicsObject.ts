@@ -40,7 +40,7 @@ abstract class GraphicsObject {
 	 * Увеличение графического объекта
 	 * @protected
 	 */
-	protected scale: number;
+	protected scale: Vector3;
 	/**
 	 * Идентификатор графического объекта
 	 * @private
@@ -56,7 +56,7 @@ abstract class GraphicsObject {
 	 * @param scale увеличение графического объекта
 	 * @protected
 	 */
-	protected constructor(id: number, shaderProgram: ShaderProgram, position: Vector3, rotation: Vector3, scale: number) {
+	protected constructor(id: number, shaderProgram: ShaderProgram, position: Vector3, rotation: Vector3, scale: Vector3) {
 		this.shaderProgram = shaderProgram;
 		this.position = position;
 		this.rotation = rotation;
@@ -122,16 +122,20 @@ abstract class GraphicsObject {
 
 	/**
 	 * Установка нового значения увеличения для графического объекта
-	 * @param scale увеличение графического объекта
+	 * @param x увеличение графического объекта по оси X
+	 * @param y увеличение графического объекта по оси Y
+	 * @param z увеличение графического объекта по оси Z
 	 */
-	public setScale(scale: number): void {
-		this.scale = scale;
+	public setScale(x: number, y: number, z: number): void {
+		this.scale.setX(x);
+		this.scale.setY(y);
+		this.scale.setZ(z);
 	}
 
 	/**
 	 * Получение увеличения для графического объекта
 	 */
-	public getScale(): number {
+	public getScale(): Vector3 {
 		return this.scale;
 	}
 

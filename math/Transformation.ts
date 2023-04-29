@@ -34,7 +34,7 @@ class Transformation {
 		const rotationXMatrix = this.getRotationXMatrix(translationMatrix, Transformation.degreesToRadians(rotationVector.getX()));
 		const rotationXYMatrix = this.getRotationYMatrix(rotationXMatrix, Transformation.degreesToRadians(rotationVector.getY()));
 		const rotationXYZMatrix = this.getRotationZMatrix(rotationXYMatrix, Transformation.degreesToRadians(rotationVector.getZ()));
-		return this.getScale(rotationXYZMatrix, scaleX, scaleY, scaleX);
+		return this.getScale(rotationXYZMatrix, scaleX, scaleY, scaleZ);
 	}
 
 	/**
