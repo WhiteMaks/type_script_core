@@ -82,7 +82,7 @@ class Camera {
 			0,
 			0
 		);
-		this.speed = 0.001;
+		this.speed = 0.01;
 		this.sensitivity = 0.1;
 		this.fieldOfView = Transformation.degreesToRadians(fieldOfView); //сохранение области просмотра
 		this.nearClippingPlane = nearClippingPlane; //сохранение ближайшей плоскости отсечения
