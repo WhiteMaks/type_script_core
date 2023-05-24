@@ -9,6 +9,7 @@ import Vector3 from "../../math/Vector3";
 import ShaderProgram from "../ShaderProgram";
 import Transformation from "../../math/Transformation";
 import GraphicsObject from "./GraphicsObject";
+import Material from "./Material";
 
 /**
  * Класс для работы с графической моделью
@@ -21,12 +22,24 @@ class GraphicsModel extends GraphicsObject {
 	protected mesh: Mesh;
 
 	/**
+	 * Объект для работы с материалом
+	 * @protected
+	 */
+	protected material: Material;
+
+	/**
 	 * Конструктор для создания объекта графической модели
 	 * @param id идентификатор графической модели
 	 * @param shaderProgram объект шейдерной программы уже умеющий прикрепленные шейдеры
 	 * @param mesh объект полигональной сетки
+	 * @param material объект материала
 	 */
-	public constructor(id: number, shaderProgram: ShaderProgram, mesh: Mesh) {
+	public constructor(
+		id: number,
+		shaderProgram: ShaderProgram,
+		mesh: Mesh,
+		material: Material
+	) {
 		super(
 			id,
 			shaderProgram,
@@ -48,6 +61,7 @@ class GraphicsModel extends GraphicsObject {
 		);
 
 		this.mesh = mesh;
+		this.material = material;
 	}
 
 	public override init(): void {
@@ -106,6 +120,11 @@ class GraphicsModel extends GraphicsObject {
 		this.shaderProgram.attachMatrix4UniformDataFloat32(
 			"worldMatrix",
 			worldMatrix
+		);
+
+		this.shaderProgram.attachMaterialUniformData(
+			"material",
+			this.material
 		);
 
 		this.shaderProgram.drawTriangleElementsWithVAO(

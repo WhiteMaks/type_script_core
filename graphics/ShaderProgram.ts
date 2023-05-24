@@ -10,6 +10,7 @@ import Vector4 from "../math/Vector4";
 import VertexShader from "./support/VertexShader";
 import FragmentShader from "./support/FragmentShader";
 import GraphicsObject from "./3d/GraphicsObject";
+import Material from "./3d/Material";
 
 /**
  * Класс для работы с шейдерной программой
@@ -350,34 +351,31 @@ class ShaderProgram {
 	//     // );
 	// }
 
-	// /**
-	//  * Прикрепление данных материала в униформу
-	//  * @param uniformName название униформы
-	//  * @param material материал
-	//  */
-	// public attachMaterialUniformData(uniformName: string, material: Material): void {
-	//     this.attachUniformVector4FData(
-	//         uniformName + ".ambient",
-	//         material.getAmbientColor()
-	//     );
-	//     this.attachUniformVector4FData(
-	//         uniformName + ".specular",
-	//         material.getSpecularColor()
-	//     );
-	//     this.attachUniformVector4FData(
-	//         uniformName + ".diffuse",
-	//         material.getDiffuseColor()
-	//     );
-	//
-	//     this.attachUniformIData(
-	//         uniformName + ".useTexture",
-	//         material.isTextured() ? 1 : 0
-	//     );
-	//     this.attachUniformFData(
-	//         uniformName + ".reflectance",
-	//         material.getReflectance()
-	//     );
-	// }
+	/**
+	 * Прикрепление данных материала в униформу
+	 * @param uniformName название униформы
+	 * @param material материал
+	 */
+	public attachMaterialUniformData(uniformName: string, material: Material): void {
+		this.attachUniformVector4FData(
+			"objectColor",
+			material.getDiffuseColor()
+		);
+		// this.attachUniformVector4FData(
+		// 	uniformName + ".specular",
+		// 	material.getSpecularColor()
+		// );
+		// this.attachUniformVector4FData(
+		// 	uniformName + ".diffuse",
+		// 	material.getDiffuseColor()
+		// );
+		//
+		//
+		// this.attachUniformFData(
+		// 	uniformName + ".reflectance",
+		// 	material.getReflectance()
+		// );
+	}
 
 	/**
 	 * Прикрепление данных к униформе
