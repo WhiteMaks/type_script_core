@@ -58,9 +58,9 @@ class GraphicsElement {
 		this.mouse = new Mouse();
 
 		this.spaceColor = new Vector3(
-			0,
-			0,
-			0
+			0.1,
+			0.1,
+			0.1
 		);
 
 		this.canvasElement = document.createElement("canvas"); //создание вэб элемента canvas
