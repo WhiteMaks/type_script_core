@@ -11,6 +11,7 @@ import VertexShader from "./support/VertexShader";
 import FragmentShader from "./support/FragmentShader";
 import GraphicsObject from "./3d/GraphicsObject";
 import Material from "./3d/Material";
+import PointLight from "./3d/objects/PointLight";
 
 /**
  * Класс для работы с шейдерной программой
@@ -53,6 +54,11 @@ class ShaderProgram {
 	 * @private
 	 */
 	private ambientLight: Vector3;
+	/**
+	 * Объект точечного источника света
+	 * @private
+	 */
+	private pointLight: PointLight;
 
 	/**
 	 * Конструктор для создания объекта шейдерной программы
@@ -76,6 +82,11 @@ class ShaderProgram {
 			0.0,
 			0.0,
 			0.0
+		);
+
+		this.pointLight = new PointLight(
+			new Vector3(0, 0, 0),
+			new Vector3(0, 0, 0)
 		);
 	}
 
@@ -281,6 +292,11 @@ class ShaderProgram {
 			this.ambientLight
 		);
 
+		this.attachPointLightUniformData(
+			"pointLight",
+			this.pointLight
+		)
+
 		for (const graphicsModel of this.graphicsObjects) {
 			graphicsModel.render();
 		}
@@ -309,49 +325,53 @@ class ShaderProgram {
 	//     );
 	// }
 
-	// /**
-	//  * Прикрепление данных точечного свету в униформу
-	//  * @param uniformName название униформы
-	//  * @param lightParameters параметры точечного света
-	//  */
-	// public attachPointLightUniformData(uniformName: string, lightParameters: LightParameters): void {
-	//     this.attachUniformVector4FData(
-	//         uniformName + ".ambient",
-	//         lightParameters.getAmbientColor()
-	//     );
-	//     this.attachUniformVector4FData(
-	//         uniformName + ".diffuse",
-	//         lightParameters.getDiffuseColor()
-	//     );
-	//     this.attachUniformVector4FData(
-	//         uniformName + ".specular",
-	//         lightParameters.getSpecularColor()
-	//     );
-	//
-	//     this.attachUniformVector3FData(
-	//         uniformName + ".position",
-	//         lightParameters.getPosition()
-	//     );
-	//
-	//     // this.attachUniformFData(
-	//     //     uniformName + ".intensity",
-	//     //     lightParameters.getIntensity()
-	//     // );
-	//     //
-	//     // const attenuation = lightParameters.getAttenuation();
-	//     // this.attachUniformFData(
-	//     //     uniformName + ".attenuation.constant",
-	//     //     attenuation.getConstant()
-	//     // );
-	//     // this.attachUniformFData(
-	//     //     uniformName + ".attenuation.linear",
-	//     //     attenuation.getLinear()
-	//     // );
-	//     // this.attachUniformFData(
-	//     //     uniformName + ".attenuation.exponent",
-	//     //     attenuation.getExponent()
-	//     // );
-	// }
+	/**
+	 * Прикрепление данных точечного свету в униформу
+	 * @param uniformName название униформы
+	 * @param pointLight объект точечного света
+	 */
+	public attachPointLightUniformData(uniformName: string, pointLight: PointLight): void {
+	    // this.attachUniformVector4FData(
+	    //     uniformName + ".ambient",
+	    //     lightParameters.getAmbientColor()
+	    // );
+	    // this.attachUniformVector4FData(
+	    //     uniformName + ".diffuse",
+	    //     lightParameters.getDiffuseColor()
+	    // );
+	    // this.attachUniformVector4FData(
+	    //     uniformName + ".specular",
+	    //     lightParameters.getSpecularColor()
+	    // );
+
+	    this.attachUniformVector3FData(
+	        uniformName + ".position",
+		    pointLight.getPosition()
+	    );
+		this.attachUniformVector3FData(
+			uniformName + ".color",
+			pointLight.getColor()
+		);
+
+	    // this.attachUniformFData(
+	    //     uniformName + ".intensity",
+	    //     lightParameters.getIntensity()
+	    // );
+	    //
+	    // const attenuation = lightParameters.getAttenuation();
+	    // this.attachUniformFData(
+	    //     uniformName + ".attenuation.constant",
+	    //     attenuation.getConstant()
+	    // );
+	    // this.attachUniformFData(
+	    //     uniformName + ".attenuation.linear",
+	    //     attenuation.getLinear()
+	    // );
+	    // this.attachUniformFData(
+	    //     uniformName + ".attenuation.exponent",
+	    //     attenuation.getExponent()
+	    // );
+	}
 
 	/**
 	 * Прикрепление данных материала в униформу
@@ -499,6 +519,14 @@ class ShaderProgram {
 	 */
 	public setAmbientLight(ambientLight: Vector3): void {
 		this.ambientLight = ambientLight;
+	}
+
+	/**
+	 * Сохранение новго источника точечного света
+	 * @param pointLight новый источник точечного света
+	 */
+	public setPointLight(pointLight: PointLight): void {
+		this.pointLight = pointLight;
 	}
 
 	/**
