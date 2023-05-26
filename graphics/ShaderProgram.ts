@@ -42,23 +42,17 @@ class ShaderProgram {
 	 */
 	private readonly fragmentShader: Shader;
 
-	// /**
-	//  * Изображение текстуры
-	//  * @private
-	//  */
-	// private readonly texture: WebGLTexture;
-
 	/**
 	 * Массив графических объектов
 	 * @private
 	 */
 	private graphicsObjects: GraphicsObject[];
 
-	// /**
-	//  * Изображение текстуры в формате картинки
-	//  * @private
-	//  */
-	// private textureImage: HTMLImageElement | null;
+	/**
+	 * Объект пространственного света
+	 * @private
+	 */
+	private ambientLight: Vector3;
 
 	/**
 	 * Конструктор для создания объекта шейдерной программы
@@ -78,8 +72,11 @@ class ShaderProgram {
 
 		this.graphicsObjects = [];
 
-		// this.texture = this.webGL.createTexture();
-		// this.textureImage = null;
+		this.ambientLight = new Vector3(
+			0.0,
+			0.0,
+			0.0
+		);
 	}
 
 	public createVertexArrayObject(): WebGLVertexArrayObject {
@@ -277,6 +274,11 @@ class ShaderProgram {
 		this.attachMatrix4UniformDataFloat32(
 			"viewMatrix",
 			viewMatrix
+		);
+
+		this.attachUniformVector3FData(
+			"ambientLight",
+			this.ambientLight
 		);
 
 		for (const graphicsModel of this.graphicsObjects) {
@@ -489,6 +491,14 @@ class ShaderProgram {
 	 */
 	public setGraphicsObjects(graphicsObjects: GraphicsObject[]): void {
 		this.graphicsObjects = graphicsObjects;
+	}
+
+	/**
+	 * Сохранение нового пространственного света
+	 * @param ambientLight новый пространственный свет
+	 */
+	public setAmbientLight(ambientLight: Vector3): void {
+		this.ambientLight = ambientLight;
 	}
 
 	/**
