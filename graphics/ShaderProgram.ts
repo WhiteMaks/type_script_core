@@ -399,23 +399,17 @@ class ShaderProgram {
 	 */
 	public attachMaterialUniformData(uniformName: string, material: Material): void {
 		this.attachUniformVector4FData(
-			"objectColor",
+			uniformName + ".diffuse",
 			material.getDiffuseColor()
 		);
-		// this.attachUniformVector4FData(
-		// 	uniformName + ".specular",
-		// 	material.getSpecularColor()
-		// );
-		// this.attachUniformVector4FData(
-		// 	uniformName + ".diffuse",
-		// 	material.getDiffuseColor()
-		// );
-		//
-		//
-		// this.attachUniformFData(
-		// 	uniformName + ".reflectance",
-		// 	material.getReflectance()
-		// );
+		this.attachUniformVector4FData(
+			uniformName + ".specular",
+			material.getEmissionColor()
+		);
+		this.attachUniformFData(
+			uniformName + ".shininess",
+			material.getRefraction()
+		);
 	}
 
 	/**
