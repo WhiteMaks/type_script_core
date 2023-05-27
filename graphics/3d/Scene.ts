@@ -69,6 +69,7 @@ class Scene {
 
 		for (const shaderProgram of this.shaderPrograms) {
 			shaderProgram.render(
+				this.camera,
 				orthogonalProjectionMatrix,
 				projectionMatrix,
 				viewMatrix

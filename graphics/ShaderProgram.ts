@@ -12,6 +12,7 @@ import FragmentShader from "./support/FragmentShader";
 import GraphicsObject from "./3d/GraphicsObject";
 import Material from "./3d/Material";
 import PointLight from "./3d/objects/PointLight";
+import Camera from "./3d/objects/Camera";
 
 /**
  * Класс для работы с шейдерной программой
@@ -270,11 +271,12 @@ class ShaderProgram {
 
 	/**
 	 * Отрисовка графического шейдера с его графическими объектами
+	 * @param camera объект для работы с камерой
 	 * @param orthogonalProjectionMatrix матрица ортогональной проекции
 	 * @param projectionMatrix матрица проекции
 	 * @param viewMatrix матрица просмотра
 	 */
-	public render(orthogonalProjectionMatrix: number[], projectionMatrix: number[], viewMatrix: number[]): void {
+	public render(camera: Camera, orthogonalProjectionMatrix: number[], projectionMatrix: number[], viewMatrix: number[]): void {
 		this.bind();
 
 		this.attachMatrix4UniformDataFloat32(
@@ -295,6 +297,11 @@ class ShaderProgram {
 		this.attachPointLightUniformData(
 			"pointLight",
 			this.pointLight
+		);
+
+		this.attachCameraUniformData(
+			"camera",
+			camera
 		)
 
 		for (const graphicsModel of this.graphicsObjects) {
@@ -326,7 +333,19 @@ class ShaderProgram {
 	// }
 
 	/**
-	 * Прикрепление данных точечного свету в униформу
+	 * Прикрепление данных камеры в униформу
+	 * @param uniformName название униформы
+	 * @param camera объект камеры
+	 */
+	public attachCameraUniformData(uniformName: string, camera: Camera): void {
+		this.attachUniformVector3FData(
+			uniformName + ".position",
+			camera.getPosition()
+		);
+	}
+
+	/**
+	 * Прикрепление данных точечного света в униформу
 	 * @param uniformName название униформы
 	 * @param pointLight объект точечного света
 	 */
