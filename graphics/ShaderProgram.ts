@@ -13,6 +13,7 @@ import GraphicsObject from "./3d/GraphicsObject";
 import Material from "./3d/Material";
 import PointLight from "./3d/objects/PointLight";
 import Camera from "./3d/objects/Camera";
+import DirectionLight from "./3d/objects/DirectionLight";
 
 /**
  * Класс для работы с шейдерной программой
@@ -60,6 +61,11 @@ class ShaderProgram {
 	 * @private
 	 */
 	private pointLight: PointLight;
+	/**
+	 * Объект направленного источника света
+	 * @private
+	 */
+	private directionLight: DirectionLight;
 
 	/**
 	 * Конструктор для создания объекта шейдерной программы
@@ -86,6 +92,11 @@ class ShaderProgram {
 		);
 
 		this.pointLight = new PointLight(
+			new Vector3(0, 0, 0),
+			new Vector3(0, 0, 0)
+		);
+
+		this.directionLight = new DirectionLight(
 			new Vector3(0, 0, 0),
 			new Vector3(0, 0, 0)
 		);
@@ -299,6 +310,11 @@ class ShaderProgram {
 			this.pointLight
 		);
 
+		this.attachDirectionalLightUniformData(
+			"directionLight",
+			this.directionLight
+		)
+
 		this.attachCameraUniformData(
 			"camera",
 			camera
@@ -311,26 +327,26 @@ class ShaderProgram {
 		this.unbind();
 	}
 
-	// /**
-	//  * Прикрепление
-	//  * @param uniformName
-	//  * @param lightParameters
-	//  */
-	// public attachDirectionalLightUniformData(uniformName: string, lightParameters: LightParameters): void {
-	//     // this.attachUniformVector3FData(
-	//     //     uniformName + ".color",
-	//     //     lightParameters.getColor()
-	//     // );
-	//     this.attachUniformVector3FData(
-	//         uniformName + ".direction",
-	//         lightParameters.getDirection()
-	//     );
-	//
-	//     this.attachUniformFData(
-	//         uniformName + ".intensity",
-	//         lightParameters.getIntensity()
-	//     );
-	// }
+	/**
+	 * Прикрепление данных направленного источника света
+	 * @param uniformName название униформы
+	 * @param directionLight объект направленного света
+	 */
+	public attachDirectionalLightUniformData(uniformName: string, directionLight: DirectionLight): void {
+	    this.attachUniformVector3FData(
+	        uniformName + ".color",
+		    directionLight.getColor()
+	    );
+	    this.attachUniformVector3FData(
+	        uniformName + ".position",
+		    directionLight.getPosition()
+	    );
+
+	    // this.attachUniformFData(
+	    //     uniformName + ".intensity",
+	    //     lightParameters.getIntensity()
+	    // );
+	}
 
 	/**
 	 * Прикрепление данных камеры в униформу
@@ -540,6 +556,14 @@ class ShaderProgram {
 	 */
 	public setPointLight(pointLight: PointLight): void {
 		this.pointLight = pointLight;
+	}
+
+	/**
+	 * Сохранение новго источника направленного света
+	 * @param directionLight новый источник направленного света
+	 */
+	public setDirectionLight(directionLight: DirectionLight): void {
+		this.directionLight = directionLight;
 	}
 
 	/**
