@@ -14,6 +14,7 @@ import Material from "./3d/Material";
 import PointLight from "./3d/objects/PointLight";
 import Camera from "./3d/objects/Camera";
 import DirectionLight from "./3d/objects/DirectionLight";
+import Attenuation from "../physics/Attenuation";
 
 /**
  * Класс для работы с шейдерной программой
@@ -93,7 +94,8 @@ class ShaderProgram {
 
 		this.pointLight = new PointLight(
 			new Vector3(0, 0, 0),
-			new Vector3(0, 0, 0)
+			new Vector3(0, 0, 0),
+			new Attenuation(0, 0, 0)
 		);
 
 		this.directionLight = new DirectionLight(
@@ -386,6 +388,18 @@ class ShaderProgram {
 		this.attachUniformVector3FData(
 			uniformName + ".color",
 			pointLight.getColor()
+		);
+		this.attachUniformFData(
+			uniformName + ".constant",
+			pointLight.getAttenuation().getConstant()
+		);
+		this.attachUniformFData(
+			uniformName + ".linear",
+			pointLight.getAttenuation().getLinear()
+		);
+		this.attachUniformFData(
+			uniformName + ".quadratic",
+			pointLight.getAttenuation().getQuadratic()
 		);
 
 	    // this.attachUniformFData(
