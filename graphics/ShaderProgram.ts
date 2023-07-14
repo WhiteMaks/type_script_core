@@ -335,19 +335,19 @@ class ShaderProgram {
 	 * @param directionLight объект направленного света
 	 */
 	public attachDirectionalLightUniformData(uniformName: string, directionLight: DirectionLight): void {
-	    this.attachUniformVector3FData(
-	        uniformName + ".color",
-		    directionLight.getColor()
-	    );
-	    this.attachUniformVector3FData(
-	        uniformName + ".position",
-		    directionLight.getPosition()
-	    );
+		this.attachUniformVector3FData(
+			uniformName + ".color",
+			directionLight.getColor()
+		);
+		this.attachUniformVector3FData(
+			uniformName + ".position",
+			directionLight.getPosition()
+		);
 
-	    // this.attachUniformFData(
-	    //     uniformName + ".intensity",
-	    //     lightParameters.getIntensity()
-	    // );
+		// this.attachUniformFData(
+		//     uniformName + ".intensity",
+		//     lightParameters.getIntensity()
+		// );
 	}
 
 	/**
@@ -368,58 +368,24 @@ class ShaderProgram {
 	 * @param pointLight объект точечного света
 	 */
 	public attachPointLightUniformData(uniformName: string, pointLight: PointLight): void {
-	    // this.attachUniformVector4FData(
-	    //     uniformName + ".ambient",
-	    //     lightParameters.getAmbientColor()
-	    // );
-	    // this.attachUniformVector4FData(
-	    //     uniformName + ".diffuse",
-	    //     lightParameters.getDiffuseColor()
-	    // );
-	    // this.attachUniformVector4FData(
-	    //     uniformName + ".specular",
-	    //     lightParameters.getSpecularColor()
-	    // );
-
-	    this.attachUniformVector3FData(
-	        uniformName + ".position",
-		    pointLight.getPosition()
-	    );
+		this.attachUniformVector3FData(
+			uniformName + ".position",
+			pointLight.getPosition()
+		);
 		this.attachUniformVector3FData(
 			uniformName + ".color",
 			pointLight.getColor()
 		);
-		this.attachUniformFData(
-			uniformName + ".constant",
-			pointLight.getAttenuation().getConstant()
-		);
-		this.attachUniformFData(
-			uniformName + ".linear",
-			pointLight.getAttenuation().getLinear()
-		);
-		this.attachUniformFData(
-			uniformName + ".quadratic",
-			pointLight.getAttenuation().getQuadratic()
+
+		this.attachUniformAttenuation(
+			uniformName + ".attenuation",
+			pointLight.getAttenuation()
 		);
 
-	    // this.attachUniformFData(
-	    //     uniformName + ".intensity",
-	    //     lightParameters.getIntensity()
-	    // );
-	    //
-	    // const attenuation = lightParameters.getAttenuation();
-	    // this.attachUniformFData(
-	    //     uniformName + ".attenuation.constant",
-	    //     attenuation.getConstant()
-	    // );
-	    // this.attachUniformFData(
-	    //     uniformName + ".attenuation.linear",
-	    //     attenuation.getLinear()
-	    // );
-	    // this.attachUniformFData(
-	    //     uniformName + ".attenuation.exponent",
-	    //     attenuation.getExponent()
-	    // );
+		// this.attachUniformFData(
+		// 	uniformName + ".intensity",
+		// 	lightParameters.getIntensity()
+		// );
 	}
 
 	/**
@@ -492,6 +458,26 @@ class ShaderProgram {
 			data.getX(),
 			data.getY(),
 			data.getZ()
+		);
+	}
+
+	/**
+	 * Прикрепление данных к униформе
+	 * @param uniformName название униформы
+	 * @param data данные для прикрепления
+	 */
+	public attachUniformAttenuation(uniformName: string, data: Attenuation): void {
+		this.attachUniformFData(
+			uniformName + ".constant",
+			data.getConstant()
+		);
+		this.attachUniformFData(
+			uniformName + ".linear",
+			data.getLinear()
+		);
+		this.attachUniformFData(
+			uniformName + ".quadratic",
+			data.getQuadratic()
 		);
 	}
 
