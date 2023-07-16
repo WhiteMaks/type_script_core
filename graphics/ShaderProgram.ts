@@ -15,6 +15,7 @@ import PointLight from "./3d/objects/PointLight";
 import Camera from "./3d/objects/Camera";
 import DirectionLight from "./3d/objects/DirectionLight";
 import Attenuation from "../physics/Attenuation";
+import StringSupport from "../support/StringSupport";
 
 /**
  * Класс для работы с шейдерной программой
@@ -61,7 +62,7 @@ class ShaderProgram {
 	 * Объект точечного источника света
 	 * @private
 	 */
-	private pointLight: PointLight;
+	private pointLights: PointLight[];
 	/**
 	 * Объект направленного источника света
 	 * @private
@@ -92,11 +93,7 @@ class ShaderProgram {
 			0.0
 		);
 
-		this.pointLight = new PointLight(
-			new Vector3(0, 0, 0),
-			new Vector3(0, 0, 0),
-			new Attenuation(0, 0, 0)
-		);
+		this.pointLights = [];
 
 		this.directionLight = new DirectionLight(
 			new Vector3(0, 0, 0),
@@ -307,20 +304,26 @@ class ShaderProgram {
 			this.ambientLight
 		);
 
-		this.attachPointLightUniformData(
-			"pointLight",
-			this.pointLight
+		this.attachUniformIData(
+			"pointLightsLength",
+			this.pointLights.length
 		);
+		for (let i = 0; i < this.pointLights.length; i++) {
+			this.attachPointLightUniformData(
+				StringSupport.format("pointLights[%s]", String(i)),
+				this.pointLights[i]
+			);
+		}
 
 		this.attachDirectionalLightUniformData(
 			"directionLight",
 			this.directionLight
-		)
+		);
 
 		this.attachCameraUniformData(
 			"camera",
 			camera
-		)
+		);
 
 		for (const graphicsModel of this.graphicsObjects) {
 			graphicsModel.render();
@@ -551,11 +554,11 @@ class ShaderProgram {
 	}
 
 	/**
-	 * Сохранение новго источника точечного света
-	 * @param pointLight новый источник точечного света
+	 * Сохранение новых источников точечного света
+	 * @param pointLights новые источники точечного света
 	 */
-	public setPointLight(pointLight: PointLight): void {
-		this.pointLight = pointLight;
+	public setPointLights(pointLights: PointLight[]): void {
+		this.pointLights = pointLights;
 	}
 
 	/**
